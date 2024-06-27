@@ -1,4 +1,4 @@
-name: Selenium Tests
+name: Tests
 on:
   push:
     branches:
@@ -15,15 +15,12 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "21.7.1"
+          node-version: "14"
       - name: Install Google Chrome
-        run:  
-             sudo apt-get update
-             sudo apt-get -yqq install chromium-chromedriver
-
-
+        if: runner.os == 'Windows'
+        run: |
+          choco install googlechrome --yes --ignore-checksums
       - name: Install dependencies
-        run:  npm install
-
+        run: npm install
       - name: Run Selenium tests
         run: npm test
