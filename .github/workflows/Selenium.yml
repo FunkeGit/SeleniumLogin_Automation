@@ -15,20 +15,16 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "14"
-      - name: Install Google Chrome
-        if: runner.os == 'Windows'
-        run: |
-          choco install google chrome --yes --ignore-checksums
-      - name: Download and set up ChromeDriver
-        run: LATEST_CHROMEDRIVER=$(curl -s "https://chromedriver.storage.googleapis.com/LATEST_RELEASE")
-          curl -L "https://chromedriver.storage.googleapis.com/$LATEST_CHROMEDRIVER/chromedriver_linux64.zip" -o chromedriver.zip
-          unzip chromedriver.zip
-          chmod +x chromedriver
-          sudo mv chromedriver /usr/local/bin/
-
+          node-version: "20"
+      
       - name: Install dependencies
         run: npm install
+      - name: Remove Chrome
+        run: sudo apt purge google-chrome-stable
+      - name: Remove default Chromium
+        run: sudo apt purge chromium-browser
+      - name: Install a new Chromium
+        run: sudo apt install -y chromium-browser
       - name: Install mocha
         run: npm install mocha --save-dev
       - name: Run Selenium tests
