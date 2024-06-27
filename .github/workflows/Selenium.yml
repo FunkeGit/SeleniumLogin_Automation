@@ -19,7 +19,7 @@ jobs:
       - name: Install Google Chrome
         if: runner.os == 'Windows'
         run: |
-          choco install googlechrome --yes --ignore-checksums
+          choco install google chrome --yes --ignore-checksums
       - name: Install dependencies
         run: npm install
       - name: Install mocha
